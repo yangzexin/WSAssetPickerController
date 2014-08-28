@@ -25,6 +25,9 @@
 
 @property (nonatomic, strong) NSArray *cellAssetViews;
 
+@property (nonatomic, assign) CGRect assetViewFrame;
+@property (nonatomic, strong) UIView *assetsContainerView;
+
 @property (nonatomic, weak) id <WSAssetsTableViewCellDelegate> delegate;
 
 + (WSAssetsTableViewCell *)assetsCellWithAssets:(NSArray *)assets reuseIdentifier:(NSString *)identifier;
