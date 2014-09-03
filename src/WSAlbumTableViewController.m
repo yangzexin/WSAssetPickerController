@@ -62,7 +62,7 @@
 {
     [super viewDidLoad];
 
-    self.navigationItem.title = @"Loading…";
+    self.navigationItem.title = NSLocalizedString(@"Loading…", nil);
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
                                                                                            target:self 
