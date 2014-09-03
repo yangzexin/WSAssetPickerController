@@ -54,7 +54,7 @@
     
     self.wantsFullScreenLayout = YES;
     
-    self.assetPickerState.state = WSAssetPickerStatePickingAlbum;
+//    self.assetPickerState.state = WSAssetPickerStatePickingAlbum;
 }
 
 

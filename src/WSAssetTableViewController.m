@@ -100,7 +100,7 @@
 
 - (NSInteger)assetsPerRow
 {
-    return MAX(1, (NSInteger)floorf(self.tableView.contentSize.width / ASSET_WIDTH_WITH_PADDING));
+    return MAX(1, (NSInteger)floorf(self.tableView.frame.size.width / ASSET_WIDTH_WITH_PADDING));
 }
 
 #pragma mark - Rotation
@@ -140,6 +140,16 @@
             
             WSAssetWrapper *assetWrapper = [[WSAssetWrapper alloc] initWithAsset:result];
             
+            BOOL selected = NO;
+            NSString *resultAssetString = result.defaultRepresentation.url.absoluteString;
+            for (int i = 0; i < self.assetPickerState.selectedAssets.count; i++) {
+                ALAsset *hadPick = self.assetPickerState.selectedAssets[i];
+                if ([hadPick.defaultRepresentation.url.absoluteString isEqualToString:resultAssetString]) {
+                    selected = YES;
+                    break;
+                }
+            }
+            assetWrapper.selected = selected;
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [self.fetchedAssets addObject:assetWrapper];

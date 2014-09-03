@@ -49,6 +49,9 @@
 
  @discussion This is the designated initializer. Keep in mind that The lifetimes of objects you get back from the picker are tied to the lifetime of the library instance. It is your responsibility to maintain a strong reference to the library until you are finished with the selected `ALAsset` objects. This is the designated initializer.
  */
+
+- (id)initWithAssetsLibrary:(ALAssetsLibrary *)assetsLibrary selectedAssets:(NSArray *)assets;
+
 - (id)initWithAssetsLibrary:(ALAssetsLibrary *)assetsLibrary;
 
 /** 

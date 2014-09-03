@@ -29,14 +29,29 @@
 @property (nonatomic, strong) WSAssetPickerState *assetPickerState;
 @property (nonatomic, readwrite) NSUInteger selectedCount;
 @property (nonatomic) UIStatusBarStyle originalStatusBarStyle;
+@property (nonatomic, strong, readwrite) NSArray *selectedAssets;
+
 @end
 
 
 @implementation WSAssetPickerController
 
-@dynamic selectedAssets;
+//@dynamic selectedAssets;
 
 #pragma mark - Initialization
+
+- (id)initWithAssetsLibrary:(ALAssetsLibrary *)assetsLibrary selectedAssets:(NSArray *)assets
+{
+    self = [super init];
+    if (self) {
+        _selectedAssets = assets;
+        [self commonInit];
+        self.assetPickerState.assetsLibrary = assetsLibrary;
+    }
+    
+    return self;
+}
+
 
 - (id)initWithAssetsLibrary:(ALAssetsLibrary *)assetsLibrary
 {
@@ -87,7 +102,11 @@
 - (WSAssetPickerState *)assetPickerState
 {
     if (!_assetPickerState) {
-        _assetPickerState = [[WSAssetPickerState alloc] init];
+        if (_selectedAssets.count) {
+            _assetPickerState = [[WSAssetPickerState alloc] initWithSelectedAssetsSet:_selectedAssets];
+        } else {
+            _assetPickerState = [[WSAssetPickerState alloc] init];
+        }
     }
     return _assetPickerState;
 }

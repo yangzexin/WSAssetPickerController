@@ -38,6 +38,15 @@
     return self;
 }
 
+- (id)initWithSelectedAssetsSet:(NSArray *)assetsSet
+{
+    if ((self = [super init])) {
+        self.state = WSAssetPickerStateInitializing;
+        self.selectedAssetsSet = [NSMutableOrderedSet orderedSetWithArray:assetsSet];
+    }
+    return self;
+}
+
 - (void)setState:(WSAssetPickingState)state
 {
     _state = state;
@@ -65,9 +74,27 @@
 - (void)changeSelectionState:(BOOL)selected forAsset:(ALAsset *)asset
 {
     if (selected) {
-        [self.selectedAssetsSet addObject:asset];
+//        [self.selectedAssetsSet addObject:asset];
+        [self.selectedAssetsSet insertObject:asset atIndex:0];
+
     } else {
-        [self.selectedAssetsSet removeObject:asset];
+        
+        int index = [self.selectedAssetsSet indexOfObject:asset];
+        if (index == NSNotFound) {
+            for (int i=0; i<self.selectedAssetsSet.count; i++) {
+                ALAsset *asset = self.selectedAssetsSet[i];
+                if ([asset.defaultRepresentation.url isEqual: asset.defaultRepresentation.url]) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index != NSNotFound) {
+                [self.selectedAssetsSet removeObjectAtIndex:index];
+            }
+            
+        } else {
+            [self.selectedAssetsSet removeObject:asset];
+        }
     }
     
     // Update the observable count property.
