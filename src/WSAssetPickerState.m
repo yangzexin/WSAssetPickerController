@@ -82,8 +82,8 @@
         int index = [self.selectedAssetsSet indexOfObject:asset];
         if (index == NSNotFound) {
             for (int i=0; i<self.selectedAssetsSet.count; i++) {
-                ALAsset *asset = self.selectedAssetsSet[i];
-                if ([asset.defaultRepresentation.url isEqual: asset.defaultRepresentation.url]) {
+                ALAsset *subAsset = self.selectedAssetsSet[i];
+                if ([subAsset.defaultRepresentation.url isEqual: asset.defaultRepresentation.url]) {
                     index = i;
                     break;
                 }
