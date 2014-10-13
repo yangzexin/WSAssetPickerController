@@ -55,6 +55,7 @@
         // Add the photo thumbnail.
         UIImageView *assetImageView = [[UIImageView alloc] initWithFrame:ASSET_VIEW_FRAME];
         assetImageView.contentMode = UIViewContentModeScaleToFill;
+        assetImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         assetImageView.image = thumbnail;
         [self addSubview:assetImageView];
     }
@@ -91,6 +92,9 @@
         
         // Lazily create the selectedView.
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:SELECTED_IMAGE]];
+        imageView.frame = self.bounds;
+        imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+
         imageView.hidden = YES;
         [self addSubview:imageView];
         

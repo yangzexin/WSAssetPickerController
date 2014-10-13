@@ -103,6 +103,22 @@
     return MAX(1, (NSInteger)floorf(self.tableView.frame.size.width / ASSET_WIDTH_WITH_PADDING));
 }
 
+#pragma mark UI SIZE
+
+- (CGFloat)_gap
+{
+    return floorf(0.0125 * CGRectGetWidth(self.tableView.frame));
+}
+
+- (CGSize)_assetsSize
+{
+    CGFloat remainWidth = CGRectGetWidth(self.tableView.frame) - ([self assetsPerRow]+1) * [self _gap];
+    CGFloat width = floorf(remainWidth / [self assetsPerRow]);
+    
+    return CGSizeMake(width, width);
+}
+
+
 #pragma mark - Rotation
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -243,7 +259,8 @@
     
     if (cell == nil) {
         
-        cell = [[WSAssetsTableViewCell alloc] initWithAssets:[self assetsForIndexPath:indexPath] reuseIdentifier:AssetCellIdentifier];        
+        cell = [[WSAssetsTableViewCell alloc] initWithAssets:[self assetsForIndexPath:indexPath] reuseIdentifier:AssetCellIdentifier];
+        cell.assetViewFrame = CGRectMake(0, 0, [self _assetsSize].width, [self _assetsSize].height);
     } else {
         
         cell.cellAssetViews = [self assetsForIndexPath:indexPath];
@@ -256,11 +273,9 @@
 
 #pragma mark - Table view delegate
 
-#define ROW_HEIGHT 79.0f
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath 
 { 
-	return ROW_HEIGHT;
+	return [self _assetsSize].height + [self _gap];
 }
 
 @end
